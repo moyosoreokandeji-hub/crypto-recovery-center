@@ -41,6 +41,7 @@ interface FormData {
   walletType: string;
   walletAddress: string;
   recoveryWalletAddress: string;
+  identificationNumber: string;
 }
 
 const initialFormData: FormData = {
@@ -55,6 +56,7 @@ const initialFormData: FormData = {
   walletType: "",
   walletAddress: "",
   recoveryWalletAddress: "",
+  identificationNumber: "",
 };
 
 const ComplaintForm = () => {
@@ -321,6 +323,26 @@ const ComplaintForm = () => {
               Enter your public wallet address only. Never share your private key or seed phrase.
             </p>
             {errors.walletAddress && <p className="text-destructive text-xs mt-1">{errors.walletAddress}</p>}
+          </div>
+
+          {/* Identification Number (Optional) */}
+          <div className="mt-5">
+            <label htmlFor="identificationNumber" className={labelClasses}>
+              Identification Number <span className="text-muted-foreground font-normal">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              id="identificationNumber"
+              name="identificationNumber"
+              value={formData.identificationNumber}
+              onChange={handleChange}
+              placeholder="e.g. Driver's License, Passport, or SSN last 4 digits"
+              className={inputClasses("identificationNumber")}
+              maxLength={50}
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Provide a government-issued ID number for identity verification. This is optional.
+            </p>
           </div>
 
           {/* Recovery Wallet Address (Optional) */}
