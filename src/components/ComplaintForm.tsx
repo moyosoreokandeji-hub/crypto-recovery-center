@@ -40,6 +40,7 @@ interface FormData {
   scamType: string;
   walletType: string;
   walletAddress: string;
+  recoveryWalletAddress: string;
 }
 
 const initialFormData: FormData = {
@@ -53,6 +54,7 @@ const initialFormData: FormData = {
   scamType: "",
   walletType: "",
   walletAddress: "",
+  recoveryWalletAddress: "",
 };
 
 const ComplaintForm = () => {
@@ -319,6 +321,26 @@ const ComplaintForm = () => {
               Enter your public wallet address only. Never share your private key or seed phrase.
             </p>
             {errors.walletAddress && <p className="text-destructive text-xs mt-1">{errors.walletAddress}</p>}
+          </div>
+
+          {/* Recovery Wallet Address (Optional) */}
+          <div className="mt-5">
+            <label htmlFor="recoveryWalletAddress" className={labelClasses}>
+              Recovery Wallet Address <span className="text-muted-foreground font-normal">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              id="recoveryWalletAddress"
+              name="recoveryWalletAddress"
+              value={formData.recoveryWalletAddress}
+              onChange={handleChange}
+              placeholder="0xAbCd...1234"
+              className={inputClasses("recoveryWalletAddress")}
+              maxLength={128}
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              If you have a new wallet address where you'd like recovered funds sent, enter it here. This is optional.
+            </p>
           </div>
 
           {/* Description */}
