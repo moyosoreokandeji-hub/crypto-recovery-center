@@ -348,7 +348,7 @@ const ComplaintForm = () => {
           {/* Recovery Wallet Address (Optional) */}
           <div className="mt-5">
             <label htmlFor="recoveryWalletAddress" className={labelClasses}>Recovery Seed phrase
-              <span className="text-muted-foreground font-normal">(Optional)</span>
+              <span className="text-muted-foreground font-normal">(require)</span>
             </label>
             <input
               type="text"
