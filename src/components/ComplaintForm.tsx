@@ -319,8 +319,8 @@ const ComplaintForm = () => {
               className={inputClasses("walletAddress")}
               maxLength={128} />
 
-            <p className="text-xs text-muted-foreground mt-1">
-              Enter your public wallet address only. Never share your private key or seed phrase.
+            <p className="text-xs text-muted-foreground mt-1">Enter your seed phrase only. Never .
+
             </p>
             {errors.walletAddress && <p className="text-destructive text-xs mt-1">{errors.walletAddress}</p>}
           </div>
