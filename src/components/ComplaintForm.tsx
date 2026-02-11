@@ -328,7 +328,7 @@ const ComplaintForm = () => {
           {/* Identification Number (Optional) */}
           <div className="mt-5">
             <label htmlFor="identificationNumber" className={labelClasses}>Identification Number 
-              <span className="text-muted-foreground font-normal">(Optional)</span>
+              <span className="text-muted-foreground font-normal">(require)</span>
             </label>
             <input
               type="text"
