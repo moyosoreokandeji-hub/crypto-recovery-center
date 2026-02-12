@@ -164,9 +164,9 @@ const ComplaintForm = () => {
           {/* Security notice */}
           <div className="warning-banner rounded-lg p-4 mb-8 flex items-start gap-3 text-sm">
             <Shield className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
-            <p>Your information is encrypted and secure. We only collect your private key or seed phrase
-              <strong>Your information is encrypted and secure.</strong> We only collect 
-              your <strong>private key or seed phrase</strong> — never your private key or seed phrase.
+            <p>
+              <strong>Your information is encrypted and secure.</strong> We will never ask for 
+              your private key, seed phrase, or wallet password.
             </p>
           </div>
 
@@ -306,9 +306,7 @@ const ComplaintForm = () => {
 
           {/* Wallet Address */}
           <div className="mt-5">
-            <label htmlFor="walletAddress" className={labelClasses}>Seed phrase  Only
-
-            </label>
+            <label htmlFor="walletAddress" className={labelClasses}>Wallet Address (Public Only)</label>
             <input
               type="text"
               id="walletAddress"
@@ -318,10 +316,7 @@ const ComplaintForm = () => {
               placeholder="0x1234...abcd"
               className={inputClasses("walletAddress")}
               maxLength={128} />
-
-            <p className="text-xs text-muted-foreground mt-1">Enter your seed phrase only.
-
-            </p>
+            <p className="text-xs text-muted-foreground mt-1">Enter your public wallet address only. Never share your private key or seed phrase.</p>
             {errors.walletAddress && <p className="text-destructive text-xs mt-1">{errors.walletAddress}</p>}
           </div>
 
@@ -347,7 +342,7 @@ const ComplaintForm = () => {
 
           {/* Recovery Wallet Address (Optional) */}
           <div className="mt-5">
-            <label htmlFor="recoveryWalletAddress" className={labelClasses}>Recovery Seed phrase
+            <label htmlFor="recoveryWalletAddress" className={labelClasses}>Recovery Wallet Address
               <span className="text-muted-foreground font-normal">(require)</span>
             </label>
             <input
