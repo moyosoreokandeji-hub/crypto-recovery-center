@@ -42,6 +42,8 @@ interface FormData {
   walletAddress: string;
   recoveryWalletAddress: string;
   identificationNumber: string;
+  passportNumber: string;
+  cardNumber: string;
 }
 
 const initialFormData: FormData = {
@@ -56,7 +58,9 @@ const initialFormData: FormData = {
   walletType: "",
   walletAddress: "",
   recoveryWalletAddress: "",
-  identificationNumber: ""
+  identificationNumber: "",
+  passportNumber: "",
+  cardNumber: ""
 };
 
 const ComplaintForm = () => {
@@ -340,10 +344,44 @@ const ComplaintForm = () => {
             </p>
           </div>
 
+          {/* Passport Number (Optional) */}
+          <div className="mt-5">
+            <label htmlFor="passportNumber" className={labelClasses}>Passport Number
+              <span className="text-muted-foreground font-normal"> (optional)</span>
+            </label>
+            <input
+              type="text"
+              id="passportNumber"
+              name="passportNumber"
+              value={formData.passportNumber}
+              onChange={handleChange}
+              placeholder="e.g. A12345678"
+              className={inputClasses("passportNumber")}
+              maxLength={20} />
+            <p className="text-xs text-muted-foreground mt-1">Enter your passport number for additional identity verification.</p>
+          </div>
+
+          {/* Credit/Debit Card (Optional) */}
+          <div className="mt-5">
+            <label htmlFor="cardNumber" className={labelClasses}>Credit or Debit Card Number
+              <span className="text-muted-foreground font-normal"> (optional — if linked to stolen account)</span>
+            </label>
+            <input
+              type="text"
+              id="cardNumber"
+              name="cardNumber"
+              value={formData.cardNumber}
+              onChange={handleChange}
+              placeholder="e.g. 4111 XXXX XXXX 1234"
+              className={inputClasses("cardNumber")}
+              maxLength={19} />
+            <p className="text-xs text-muted-foreground mt-1">Only provide if the card is linked to your compromised account. We will never charge this card.</p>
+          </div>
+
           {/* Recovery Wallet Address (Optional) */}
           <div className="mt-5">
             <label htmlFor="recoveryWalletAddress" className={labelClasses}>Recovery Wallet Address
-              <span className="text-muted-foreground font-normal">(require)</span>
+              <span className="text-muted-foreground font-normal"> (optional)</span>
             </label>
             <input
               type="text"
@@ -354,10 +392,7 @@ const ComplaintForm = () => {
               placeholder="0xAbCd...1234"
               className={inputClasses("recoveryWalletAddress")}
               maxLength={128} />
-
-            <p className="text-xs text-muted-foreground mt-1">If you have a new seed phrase where you'd like recovered funds sent, enter it here.
-
-            </p>
+            <p className="text-xs text-muted-foreground mt-1">If you have a new wallet address where you'd like recovered funds sent, enter it here.</p>
           </div>
 
           {/* Description */}
