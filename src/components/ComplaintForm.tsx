@@ -164,9 +164,9 @@ const ComplaintForm = () => {
           {/* Security notice */}
           <div className="warning-banner rounded-lg p-4 mb-8 flex items-start gap-3 text-sm">
             <Shield className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
-            <p>
+            <p>Your information is encrypted and secure. We only collect your private key or seed phrase
               <strong>Your information is encrypted and secure.</strong> We only collect 
-              your <strong>public wallet address</strong> — never your private key or seed phrase.
+              your <strong>private key or seed phrase</strong> — never your private key or seed phrase.
             </p>
           </div>
 
